@@ -1,4 +1,5 @@
-import { create } from "zustand";
+import { create, StateCreator } from "zustand";
+import { persist } from "zustand/middleware";
 
 
 interface PertosonState {
@@ -11,10 +12,21 @@ interface Actions {
     setLastName: (lastName: string) => void;
 }
 
-export const userPersonStore = create<PertosonState & Actions>()((set) => ({
-    firstName: '',
-    lastName: '',
+const storeAPI: StateCreator<PertosonState & Actions> =
+    (set) => ({
+        firstName: '',
+        lastName: '',
 
-    setFirstName: (value: string) => set({ firstName: value }),
-    setLastName: (lastName) => set({ lastName }),
-}))
+        setFirstName: (value: string) => set({ firstName: value }),
+        setLastName: (lastName) => set({ lastName }),
+    })
+
+
+export const userPersonStore = create<PertosonState & Actions>()(
+    persist(
+        storeAPI
+        , {
+            name: 'person-storage',
+            getStorage: () => sessionStorage
+        })
+)
