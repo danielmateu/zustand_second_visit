@@ -1,10 +1,10 @@
 import { create, StateCreator } from "zustand";
-import { persist } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 import { firebaseStorage } from "../storages/firebase.storage";
 
 
 
-interface PertosonState {
+interface PersonState {
     firstName: string;
     lastName: string;
 }
@@ -14,21 +14,27 @@ interface Actions {
     setLastName: (lastName: string) => void;
 }
 
-const storeAPI: StateCreator<PertosonState & Actions> =
+const storeAPI: StateCreator<PersonState & Actions, [["zustand/devtools", never]]> =
     (set) => ({
         firstName: '',
         lastName: '',
 
-        setFirstName: (value: string) => set({ firstName: value }),
-        setLastName: (lastName) => set({ lastName }),
+        setFirstName: (value: string) => set(({ firstName: value }),
+            false, 'setFirstName'
+        ),
+        setLastName: (lastName) => set(({ lastName }),
+            false, 'setLastName'
+        ),
     })
 
-export const userPersonStore = create<PertosonState & Actions>()(
-    persist(
-        storeAPI
-        , {
-            name: 'person-storage',
-            storage: firebaseStorage
+export const userPersonStore = create<PersonState & Actions>()(
+    devtools(
+        persist(
+            storeAPI
+            , {
+                name: 'person-storage',
+                storage: firebaseStorage
 
-        })
+            })
+    )
 )
