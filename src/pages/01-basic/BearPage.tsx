@@ -100,11 +100,17 @@ export const BearsDisplay = () => {
   const bears = useBearStore(useShallow((state) => state.bears))
   // const bears = useBearStore((state) => state.bears)
   const doNothing = useBearStore((state) => state.doNothing)
+  const addBear = useBearStore((state) => state.addBear)
+  const clearBears = useBearStore((state) => state.clearBears)
 
   return (
     <WhiteCard centered>
       <h2>Osos</h2>
-      <button onClick={doNothing}>Do nothing</button>
+      <div className="flex flex-col gap-2">
+        <button onClick={doNothing}>Do nothing</button>
+        <button onClick={addBear}>Add Bear</button>
+        <button onClick={clearBears}>Clear Bears</button>
+      </div>
 
       <div className="flex flex-col md:flex-row">
         <pre>
