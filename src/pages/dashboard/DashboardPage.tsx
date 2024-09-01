@@ -5,7 +5,8 @@ import { userPersonStore } from '../../stores';
 
 export const Dashboard = () => {
 
-  const totalBears = useBearStore(state => state.computed.totalBears)
+  // const totalBears = useBearStore(state => state.computed.totalBears)
+  const totalBears = useBearStore(state => state.totalBears())
   const personFirstName = userPersonStore(state => state.firstName)
   const personSecondName = userPersonStore(state => state.lastName)
 
