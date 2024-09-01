@@ -1,6 +1,7 @@
 import { create, StateCreator } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { firebaseStorage } from "../storages/firebase.storage";
+import { logger } from "../middlewares/loger.middleware";
 
 
 
@@ -28,6 +29,7 @@ const storeAPI: StateCreator<PersonState & Actions, [["zustand/devtools", never]
     })
 
 export const userPersonStore = create<PersonState & Actions>()(
+    // logger(
     devtools(
         persist(
             storeAPI
@@ -37,4 +39,5 @@ export const userPersonStore = create<PersonState & Actions>()(
 
             })
     )
+    // )
 )
