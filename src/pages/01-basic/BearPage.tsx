@@ -69,8 +69,7 @@ export const PolarBears = () => {
 
 export const PandaBears = () => {
 
-  const pandaBears = useBearStore((state) => state.pandaBears)
-  const increasePandaBears = useBearStore((state) => state.increasePandaBears)
+  const { pandaBears, increasePandaBears } = useBearStore((state) => state)
 
   return (
     <WhiteCard centered>
