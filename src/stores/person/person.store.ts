@@ -1,6 +1,7 @@
 import { create, StateCreator } from "zustand";
-import { createJSONStorage, persist, StateStorage } from "zustand/middleware";
-import { customSessionStorage } from "../storages/session-storage.storage";
+import { persist } from "zustand/middleware";
+import { firebaseStorage } from "../storages/firebase.storage";
+
 
 
 interface PertosonState {
@@ -27,7 +28,7 @@ export const userPersonStore = create<PertosonState & Actions>()(
         storeAPI
         , {
             name: 'person-storage',
-            storage: customSessionStorage
+            storage: firebaseStorage
 
         })
 )
