@@ -1,5 +1,6 @@
 import { create, StateCreator } from "zustand";
 import { createJSONStorage, persist, StateStorage } from "zustand/middleware";
+import { customSessionStorage } from "../storages/session-storage.storage";
 
 
 interface PertosonState {
@@ -21,28 +22,12 @@ const storeAPI: StateCreator<PertosonState & Actions> =
         setLastName: (lastName) => set({ lastName }),
     })
 
-
-const sessionStorage: StateStorage = {
-    getItem: function (name: string): string | null | Promise<string | null> {
-        // throw new Error("Function not implemented.");
-        return sessionStorage.getItem(name);
-    },
-    setItem: function (name: string, value: string): unknown | Promise<unknown> {
-        // throw new Error("Function not implemented.");
-        return sessionStorage.setItem(name, value);
-    },
-    removeItem: function (name: string): unknown | Promise<unknown> {
-        // throw new Error("Function not implemented.");
-        return sessionStorage.removeItem(name);
-    }
-}
-
 export const userPersonStore = create<PertosonState & Actions>()(
     persist(
         storeAPI
         , {
             name: 'person-storage',
-            storage: createJSONStorage(() => sessionStorage)
+            storage: customSessionStorage
 
         })
 )
