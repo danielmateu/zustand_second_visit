@@ -7,9 +7,9 @@ import { immer } from "zustand/middleware/immer";
 
 
 export interface TaskState {
+
     draggingTaskId: string | undefined;
     tasks: Record<string, Task>;
-
     getTaskByStatus: (status: TaskStatus) => Task[];
     addTask: (title: string, status: TaskStatus) => void;
 
@@ -19,6 +19,8 @@ export interface TaskState {
     changeTaskStatus: (taskId: string, status: TaskStatus) => void;
 
     onTaskDrop: (status: TaskStatus) => void;
+
+    totalTasks: () => number;
 }
 
 const storeAPI: StateCreator<TaskState, [["zustand/devtools", never], ["zustand/immer", never]]> = (set, get) => ({
@@ -65,6 +67,10 @@ const storeAPI: StateCreator<TaskState, [["zustand/devtools", never], ["zustand/
 
         get().changeTaskStatus(draggingTaskId, status)
         get().removeDraggingTaskId()
+    },
+
+    totalTasks: () => {
+        return Object.keys(get().tasks).length
     }
 })
 
