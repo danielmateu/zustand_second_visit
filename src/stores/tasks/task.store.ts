@@ -21,7 +21,7 @@ export interface TaskState {
     onTaskDrop: (status: TaskStatus) => void;
 }
 
-const storeAPI: StateCreator<TaskState> = (set, get) => ({
+const storeAPI: StateCreator<TaskState, [["zustand/devtools", never], ["zustand/immer", never]]> = (set, get) => ({
     draggingTaskId: undefined,
     tasks: {
         'ABC-1': { id: 'ABC-1', title: 'Task 1', status: 'open' },
@@ -36,13 +36,10 @@ const storeAPI: StateCreator<TaskState> = (set, get) => ({
     addTask: (title: string, status: TaskStatus) => {
         // const id = `ABC-${Object.keys(get().tasks).length + 1}`
         const newTask = { id: uuidv4(), title, status }
-        console.log({ newTask });
-        set((state) => ({
-            tasks: {
-                ...state.tasks,
-                [newTask.id]: newTask
-            }
-        }))
+
+        set((state) => {
+            state.tasks[newTask.id] = newTask
+        })
     },
 
 
@@ -52,28 +49,15 @@ const storeAPI: StateCreator<TaskState> = (set, get) => ({
     removeDraggingTaskId() {
         set({ draggingTaskId: undefined })
     },
-    // changeTaskStatus(taskId: string, status: TaskStatus) {
 
-    //     const task = get().tasks[taskId]
-    //     task.status = status
-
-    //     set((state) => ({
-    //         tasks: {
-    //             ...state.tasks,
-    //             [taskId]: task
-    //         }
-    //     }))
-    // },
     changeTaskStatus(taskId: string, status: TaskStatus) {
         const task = get().tasks[taskId]
         const updatedTask = { ...task, status } // Crear una copia y actualizar el estado
 
-        set((state) => ({
-            tasks: {
-                ...state.tasks,
-                [taskId]: updatedTask // Usar la tarea actualizada
-            }
-        }))
+        set((state) => {
+            state.tasks[taskId] = updatedTask
+        })
+
     },
     onTaskDrop(status: TaskStatus) {
         const draggingTaskId = get().draggingTaskId
