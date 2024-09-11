@@ -15,7 +15,7 @@ interface Props {
 }
 
 
-export const JiraTasks = ({ title, status: value, tasks }: Props) => {
+export const JiraTasks = ({ title, status, tasks }: Props) => {
 
   const isDragging = useTaskStore(state => !!state.draggingTaskId);
   const onTaskDrop = useTaskStore(state => state.onTaskDrop);
@@ -45,7 +45,7 @@ export const JiraTasks = ({ title, status: value, tasks }: Props) => {
     })
 
     if (isConfirmed) {
-      addTask(value, 'open')
+      addTask(value, status)
     }
     // addTask('New Task', value)
   }
@@ -67,7 +67,7 @@ export const JiraTasks = ({ title, status: value, tasks }: Props) => {
     e.preventDefault()
     setOnDragOver(false)
     // changeTaskStatus(draggingTaskId!, value)
-    onTaskDrop(value)
+    onTaskDrop(status)
   }
 
   return (
