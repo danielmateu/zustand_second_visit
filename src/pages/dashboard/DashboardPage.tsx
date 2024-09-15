@@ -1,3 +1,5 @@
+
+
 import { IoAccessibilityOutline, IoHeartOutline, IoListOutline, IoLockClosedOutline, IoPawOutline } from 'react-icons/io5';
 import { WhiteCard } from '../../components';
 import useBearStore from '../../stores/bears/bears.store';
@@ -17,7 +19,9 @@ export const Dashboard = () => {
       <p>Información colectiva de varios stores de Zustand</p>
       <hr />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      {/* <div className="grid 
+      grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"> */}
+      <div className="grid ~grid-cols-4 gap-4">
 
         <WhiteCard centered>
           <IoPawOutline size={50} className="text-indigo-600" />
